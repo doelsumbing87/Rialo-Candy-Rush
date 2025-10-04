@@ -94,31 +94,42 @@ function toggleSound() {
 function selectLevel(level) {
     currentLevel = level;
     const levelConfig = LEVELS[level];
-    
+
     moves = levelConfig.moves;
     target = levelConfig.target;
-    
+
+    // Sembunyikan level selection, tampilkan loading screen
     document.getElementById('levelSelection').style.display = 'none';
-    document.getElementById('gameContainer').style.display = 'block';
-    
-    const levelBadge = document.getElementById('levelBadge');
-    levelBadge.textContent = levelConfig.name;
-    levelBadge.className = 'level-badge ' + levelConfig.className;
-    
-    startGame();
+    document.getElementById('loadingScreen').style.display = 'flex';
+
+    // Delay 2 detik sebelum masuk game
+    setTimeout(() => {
+        document.getElementById('loadingScreen').style.display = 'none';
+        document.getElementById('gameContainer').style.display = 'block';
+
+        const levelBadge = document.getElementById('levelBadge');
+        levelBadge.textContent = levelConfig.name;
+        levelBadge.className = 'level-badge ' + levelConfig.className;
+
+        enterGameBackground(); // ubah background ke background2
+        startGame();
+    }, 2000); // 2000ms = 2 detik
 }
+
 
 // Show Level Selection
 function showLevelSelection() {
     bgMusic.pause();
     document.getElementById('gameContainer').style.display = 'none';
     document.getElementById('levelSelection').style.display = 'flex';
+    exitGameBackground(); // 🔥 kembalikan background ke background.png
 }
 
 // Show Level Selection from Modal
 function showLevelSelectionFromModal() {
     closeModal();
     showLevelSelection();
+    exitGameBackground(); // 🔥 jaga supaya background balik ke background.png
 }
 
 // Initialize Board
@@ -457,3 +468,12 @@ window.addEventListener('DOMContentLoaded', () => {
     document.getElementById('levelSelection').style.display = 'flex';
     document.getElementById('gameContainer').style.display = 'none';
 });
+
+// === Background Switcher ===
+function enterGameBackground() {
+    document.body.classList.add("in-game");
+}
+
+function exitGameBackground() {
+    document.body.classList.remove("in-game");
+}
