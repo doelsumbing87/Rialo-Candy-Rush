@@ -1,0 +1,281 @@
+/* === GLOBAL STYLES & FONTS === */
+/* Gaya dasar untuk seluruh halaman */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Nunito', sans-serif; /* Font utama untuk teks */
+    background: linear-gradient(135deg, #ffdde1, #ee9ca7); /* Latar belakang gradien yang manis */
+    color: #444;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    overflow: hidden; /* Mencegah scroll yang tidak perlu */
+}
+
+/* === SCREEN MANAGEMENT === */
+/* Mengatur bagaimana layar (halaman awal/game) ditampilkan */
+.screen {
+    display: none; /* Semua layar disembunyikan secara default */
+    width: 100%;
+    max-width: 600px;
+    padding: 20px;
+}
+
+.screen.active {
+    display: block; /* Layar dengan kelas 'active' akan ditampilkan */
+}
+
+/* === START SCREEN STYLING === */
+/* Gaya untuk halaman pembuka */
+#start-screen {
+    text-align: center;
+}
+
+.start-container {
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+.logo-large {
+    width: 120px;
+    margin-bottom: 20px;
+}
+
+.game-title {
+    font-family: 'Lilita One', cursive; /* Font khusus untuk judul */
+    font-size: 3.5rem;
+    color: #e91e63; /* Warna pink cerah */
+    text-shadow: 2px 2px 0 #fff, 4px 4px 0 rgba(0,0,0,0.1);
+}
+
+.tagline {
+    font-size: 1.2rem;
+    margin: 10px 0 30px;
+    color: #555;
+}
+
+/* === MAIN GAME AREA STYLING === */
+/* Gaya untuk area permainan utama */
+.game-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #fff;
+    padding: 10px 20px;
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+    margin-bottom: 20px;
+}
+
+.logo-area {
+    display: flex;
+    align-items: center;
+}
+
+.logo-area h2 {
+    font-family: 'Lilita One', cursive;
+    font-size: 1.5rem;
+    color: #e91e63;
+}
+
+.logo-small {
+    width: 40px;
+    margin-right: 10px;
+}
+
+.info-panel {
+    display: flex;
+    gap: 20px;
+}
+
+.info-box {
+    background-color: #fce4ec; /* Pink sangat muda */
+    padding: 5px 15px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.info-box h3 {
+    font-size: 0.8rem;
+    color: #e91e63;
+}
+
+.info-box span {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #ad1457;
+}
+
+/* === GAME BOARD STYLING (THE FIX IS HERE) === */
+#board-container {
+    display: flex;
+    justify-content: center;
+}
+
+#board {
+    width: 450px;
+    height: 450px;
+    background-color: rgba(255, 255, 255, 0.7);
+    border: 5px solid #fff;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+
+    /* --- PERUBAHAN UTAMA DI SINI --- */
+    /* Mengganti Flexbox dengan CSS Grid untuk presisi */
+    display: grid;
+    grid-template-rows: repeat(9, 1fr);
+    grid-template-columns: repeat(9, 1fr);
+}
+
+#board img {
+    /* Membuat gambar mengisi sel gridnya dengan sempurna */
+    width: 100%;
+    height: 100%;
+    cursor: grab;
+}
+
+/* === CONTROL BUTTONS STYLING === */
+.game-controls {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+/* === GENERAL BUTTON STYLING === */
+.btn {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    padding: 12px 25px;
+    border-radius: 50px; /* Membuat tombol berbentuk kapsul */
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.btn-primary {
+    background-color: #ff4081;
+    color: white;
+    box-shadow: 0 4px 0 #c2185b;
+}
+
+.btn-primary:hover {
+    background-color: #f50057;
+    transform: translateY(-2px);
+}
+
+.btn-primary:active {
+    transform: translateY(2px);
+    box-shadow: 0 2px 0 #c2185b;
+}
+
+.btn-secondary {
+    background-color: #f1f1f1;
+    color: #555;
+    box-shadow: 0 4px 0 #ccc;
+}
+
+.btn-secondary:hover {
+    background-color: #e0e0e0;
+    transform: translateY(-2px);
+}
+
+.btn-secondary:active {
+    transform: translateY(2px);
+    box-shadow: 0 2px 0 #ccc;
+}
+
+
+/* === MODAL (POP-UP) STYLING === */
+.modal {
+    display: none; /* Disembunyikan secara default */
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Latar belakang semi-transparan */
+    justify-content: center;
+    align-items: center;
+}
+
+.modal.active {
+    display: flex; /* Ditampilkan saat memiliki kelas 'active' */
+}
+
+.modal-content {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    width: 90%;
+    max-width: 500px;
+    text-align: center;
+    position: relative;
+    animation: zoomIn 0.3s ease-out;
+}
+
+@keyframes zoomIn {
+    from { transform: scale(0.5); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+.close-button {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    color: #aaa;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close-button:hover {
+    color: #333;
+}
+
+.modal-content h2 {
+    font-family: 'Lilita One', cursive;
+    color: #e91e63;
+    font-size: 2.5rem;
+    margin-bottom: 15px;
+}
+
+.modal-content ul {
+    list-style: none;
+    padding: 0;
+    text-align: left;
+    margin: 20px 0;
+}
+
+.modal-content ul li {
+    margin-bottom: 10px;
+    padding-left: 25px;
+    position: relative;
+}
+
+.modal-content ul li::before {
+    content: '🍬'; /* Emoji permen sebagai bullet point */
+    position: absolute;
+    left: 0;
+}
+
+.final-score-display {
+    display: block;
+    font-family: 'Lilita One', cursive;
+    font-size: 4rem;
+    color: #ff4081;
+    margin: 10px 0 25px;
+}
+

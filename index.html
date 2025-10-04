@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rialo Candy Rush - A Sweet & Fun Game</title>
+
+    <!-- Adding Google Fonts for a more appealing look -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lilita+One&family=Nunito:wght@400;700&display=swap" rel="stylesheet">
+
+    <!-- Linking to the CSS file -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- === START SCREEN === -->
+    <!-- Appears first when the game is opened -->
+    <div id="start-screen" class="screen active">
+        <div class="start-container">
+            <img src="logo.png" alt="Rialo Candy Rush Logo" class="logo-large">
+            <h1 class="game-title">Rialo Candy Rush</h1>
+            <p class="tagline">Match the candies and get the highest score!</p>
+            <button id="start-button" class="btn btn-primary">Start Playing!</button>
+        </div>
+    </div>
+
+    <!-- === MAIN GAME AREA === -->
+    <!-- Initially hidden, appears after the "Start Playing" button is clicked -->
+    <div id="game-container" class="screen">
+        <header class="game-header">
+            <div class="logo-area">
+                <img src="logo.png" alt="Logo" class="logo-small">
+                <h2>Rialo Candy Rush</h2>
+            </div>
+            <div class="info-panel">
+                <div class="info-box">
+                    <h3>SCORE</h3>
+                    <span id="score">0</span>
+                </div>
+                <div class="info-box">
+                    <h3>TIME</h3>
+                    <span id="timer">60</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Game Board -->
+        <main>
+            <div id="board-container">
+                <div id="board"></div>
+            </div>
+        </main>
+        
+        <!-- Control Buttons Below Game Board -->
+        <footer class="game-controls">
+            <button id="restart-button" class="btn btn-secondary">Restart</button>
+            <button id="instructions-button" class="btn btn-secondary">Instructions</button>
+        </footer>
+    </div>
+
+    <!-- === INSTRUCTIONS MODAL (POP-UP) === -->
+    <div id="instructions-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-button" id="close-instructions">&times;</span>
+            <h2>How to Play</h2>
+            <ul>
+                <li>Drag and drop a candy to swap it with an adjacent one (up, down, left, or right).</li>
+                <li>Create a line of 3 or more candies of the same color to crush them and earn points.</li>
+                <li>New candies will fall from the top to fill the empty spaces.</li>
+                <li>Get as many points as you can before time runs out!</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- === GAME OVER MODAL (POP-UP) === -->
+    <div id="game-over-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-button" id="close-game-over">&times;</span>
+            <h2>Game Over!</h2>
+            <p>Your final score is:</p>
+            <span id="final-score" class="final-score-display">0</span>
+            <button id="play-again-button" class="btn btn-primary">Play Again</button>
+        </div>
+    </div>
+    
+    <!-- Linking to JavaScript file at the end of the body -->
+    <script src="script.js" defer></script>
+
+</body>
+</html>
+
