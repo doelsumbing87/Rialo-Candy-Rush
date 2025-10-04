@@ -4,15 +4,26 @@
     box-sizing: border-box;
 }
 
+/* ==== Background Default (Level Selection) ==== */
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    font-family: 'Poppins', sans-serif;
+    background-image: url('background.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
     min-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
     padding: 20px;
     overflow-x: hidden;
+    transition: background-image 1s ease-in-out; /* efek transisi lembut */
+}
+
+/* ==== Saat Masuk Game ==== */
+body.in-game {
+    background-image: url('background2.png');
 }
 
 .game-container {
@@ -343,20 +354,20 @@ body {
     100% { transform: translateY(-60px); opacity: 0; }
 }
 
-/* ===== LEVEL SELECTION ===== */
 .level-selection {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    /* background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); <-- hapus baris ini */
     display: flex;
     justify-content: center;
     align-items: center;
     padding: 20px;
     z-index: 2000;
 }
+
 
 .level-container {
     background: rgba(255, 255, 255, 0.98);
@@ -1049,3 +1060,86 @@ body {
         font-size: 0.75em;
     }
 }
+
+/* ==== Background Candy Rush ==== */
+body {
+    background-image: url('background.png');
+    background-size: cover;          
+    background-position: center;     
+    background-repeat: no-repeat;    
+    background-attachment: fixed;    
+    font-family: 'Poppins', sans-serif;
+}
+
+.level-selection,
+.game-container {
+    background-color: rgba(255, 255, 255, 0.85);
+    border-radius: 20px;
+    padding: 20px;
+    margin: 20px auto;
+    max-width: 800px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* ==== Fix Level Selection Layout ==== */
+.level-selection {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh; /* biar full tinggi layar */
+    position: relative;
+    z-index: 2;
+}
+
+/* Untuk pastikan latar belakang game tetap penuh */
+body {
+    min-height: 100vh;
+    overflow-x: hidden;
+    background-image: url('background.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+/* Tambahkan layer putih transparan di tengah */
+.level-container {
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: 0 4px 25px rgba(0, 0, 0, 0.15);
+    text-align: center;
+    max-width: 700px;
+    width: 90%;
+}
+
+/* ==== Loading Screen ==== */
+.loading-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('background.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 5000;
+}
+
+.loading-text {
+    font-size: 2rem;
+    font-weight: bold;
+    color: white;
+    text-shadow: 0 2px 5px rgba(0,0,0,0.5);
+    animation: blink 1s infinite;
+}
+
+@keyframes blink {
+    0%, 50%, 100% { opacity: 1; }
+    25%, 75% { opacity: 0.5; }
+}
+
