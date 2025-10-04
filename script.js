@@ -2,6 +2,40 @@
 const BOARD_SIZE = 8;
 const CANDY_TYPES = ['🍬', '🍭', '🍫', '🍩', '🍪', '🧁'];
 
+// Level Configuration
+const LEVELS = {
+    easy: {
+        name: 'EASY',
+        moves: 35,
+        target: 800,
+        className: 'easy'
+    },
+    normal: {
+        name: 'NORMAL',
+        moves: 30,
+        target: 1000,
+        className: 'normal'
+    },
+    hard: {
+        name: 'HARD',
+        moves: 25,
+        target: 1200,
+        className: 'hard'
+    },
+    expert: {
+        name: 'EXPERT',
+        moves: 20,
+        target: 1500,
+        className: 'expert'
+    },
+    nightmare: {
+        name: 'NIGHTMARE',
+        moves: 15,
+        target: 2000,
+        className: 'nightmare'
+    }
+};
+
 // Game State
 let board = [];
 let score = 0;
@@ -11,6 +45,7 @@ let selectedCandy = null;
 let isProcessing = false;
 let combo = 0;
 let soundEnabled = true;
+let currentLevel = 'normal';
 
 // Audio Elements
 let bgMusic, matchSound, comboSound, swapSound, winSound, gameOverSound;
@@ -47,12 +82,43 @@ function toggleSound() {
     const btn = document.getElementById('soundToggle');
     
     if (soundEnabled) {
-        btn.textContent = '🔊 SUARA ON';
+        btn.textContent = '🔊 SOUND ON';
         bgMusic.play().catch(e => console.log('BGM play failed:', e));
     } else {
-        btn.textContent = '🔇 SUARA OFF';
+        btn.textContent = '🔇 SOUND OFF';
         bgMusic.pause();
     }
+}
+
+// Select Level
+function selectLevel(level) {
+    currentLevel = level;
+    const levelConfig = LEVELS[level];
+    
+    moves = levelConfig.moves;
+    target = levelConfig.target;
+    
+    document.getElementById('levelSelection').style.display = 'none';
+    document.getElementById('gameContainer').style.display = 'block';
+    
+    const levelBadge = document.getElementById('levelBadge');
+    levelBadge.textContent = levelConfig.name;
+    levelBadge.className = 'level-badge ' + levelConfig.className;
+    
+    startGame();
+}
+
+// Show Level Selection
+function showLevelSelection() {
+    bgMusic.pause();
+    document.getElementById('gameContainer').style.display = 'none';
+    document.getElementById('levelSelection').style.display = 'flex';
+}
+
+// Show Level Selection from Modal
+function showLevelSelectionFromModal() {
+    closeModal();
+    showLevelSelection();
 }
 
 // Initialize Board
@@ -287,6 +353,7 @@ function fillEmpty() {
 function updateStats() {
     document.getElementById('score').textContent = score;
     document.getElementById('moves').textContent = moves;
+    document.getElementById('target').textContent = target;
     const progress = Math.min((score / target) * 100, 100);
     const progressBar = document.getElementById('progress');
     progressBar.style.width = progress + '%';
@@ -315,26 +382,37 @@ function showScorePopup(points, position) {
 
 // Check Game Over
 function checkGameOver() {
+    const levelConfig = LEVELS[currentLevel];
+    
     if (score >= target) {
         playSound(winSound);
         bgMusic.pause();
         setTimeout(() => {
-            showModal('🎉 MENANG!', `Selamat! Anda mencapai target dengan ${moves} moves tersisa!`);
+            showModal(
+                '🎉 VICTORY!', 
+                `Congratulations! You completed ${levelConfig.name} level with ${moves} moves remaining!`
+            );
         }, 500);
     } else if (moves <= 0) {
         playSound(gameOverSound);
         bgMusic.pause();
         setTimeout(() => {
-            showModal('😢 GAME OVER', `Sayang sekali! Anda hampir mencapai target!`);
+            showModal(
+                '😢 GAME OVER', 
+                `You were so close! Try ${levelConfig.name} level again!`
+            );
         }, 500);
     }
 }
 
 // Show Modal
 function showModal(title, message) {
+    const levelConfig = LEVELS[currentLevel];
+    
     document.getElementById('modalTitle').textContent = title;
     document.getElementById('modalMessage').textContent = message;
     document.getElementById('finalScore').textContent = score;
+    document.getElementById('finalLevel').textContent = levelConfig.name;
     document.getElementById('gameOverModal').style.display = 'flex';
 }
 
@@ -347,11 +425,14 @@ function closeModal() {
 // Start Game
 function startGame() {
     score = 0;
-    moves = 30;
-    target = 1000;
     combo = 0;
     selectedCandy = null;
     isProcessing = false;
+    
+    // Use current level configuration
+    const levelConfig = LEVELS[currentLevel];
+    moves = levelConfig.moves;
+    target = levelConfig.target;
     
     initBoard();
     renderBoard();
@@ -360,7 +441,7 @@ function startGame() {
     // Start background music
     if (soundEnabled) {
         bgMusic.currentTime = 0;
-        bgMusic.play().catch(e => console.log('BGM play failed:', e));
+        bgMusic.play().catch(e => console.log("BGM play failed:", e));
     }
 }
 
@@ -372,5 +453,7 @@ function resetGame() {
 // Initialize Game on Load
 window.addEventListener('DOMContentLoaded', () => {
     initAudio();
-    startGame();
+    // Show level selection on start
+    document.getElementById('levelSelection').style.display = 'flex';
+    document.getElementById('gameContainer').style.display = 'none';
 });
