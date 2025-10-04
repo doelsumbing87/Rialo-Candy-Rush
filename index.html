@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,15 +7,58 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="game-container">
+    <!-- Level Selection Screen -->
+    <div class="level-selection" id="levelSelection">
+        <div class="level-container">
+            <img src="logo.png" alt="Rialo Candy Rush" class="logo-large">
+            <h1>🍬 RIALO CANDY RUSH 🍭</h1>
+            <h2>SELECT YOUR LEVEL</h2>
+            
+            <div class="level-grid">
+                <button class="level-btn easy" onclick="selectLevel('easy')">
+                    <span class="level-icon">🟢</span>
+                    <span class="level-name">EASY</span>
+                    <span class="level-info">35 Moves | Target: 800</span>
+                </button>
+                
+                <button class="level-btn normal" onclick="selectLevel('normal')">
+                    <span class="level-icon">🔵</span>
+                    <span class="level-name">NORMAL</span>
+                    <span class="level-info">30 Moves | Target: 1000</span>
+                </button>
+                
+                <button class="level-btn hard" onclick="selectLevel('hard')">
+                    <span class="level-icon">🟠</span>
+                    <span class="level-name">HARD</span>
+                    <span class="level-info">25 Moves | Target: 1200</span>
+                </button>
+                
+                <button class="level-btn expert" onclick="selectLevel('expert')">
+                    <span class="level-icon">🔴</span>
+                    <span class="level-name">EXPERT</span>
+                    <span class="level-info">20 Moves | Target: 1500</span>
+                </button>
+                
+                <button class="level-btn nightmare" onclick="selectLevel('nightmare')">
+                    <span class="level-icon">💀</span>
+                    <span class="level-name">NIGHTMARE</span>
+                    <span class="level-info">15 Moves | Target: 2000</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Game Screen -->
+    <div class="game-container" id="gameContainer" style="display: none;">
         <div class="header">
-            <img src="logo.png" alt="Rialo Candy Rush Logo" class="logo-large">
-            <h1>RIALO CANDY RUSH</h1>
+            <img src="logo.png" alt="Rialo Candy Rush" class="logo-large">
+            <h1>🍬 RIALO CANDY RUSH 🍭</h1>
+            <div class="level-badge" id="levelBadge">NORMAL</div>
         </div>
 
         <div class="stats">
             <div class="stat-box">
-                <div class="stat-label">SKOR</div>
+                <div class="stat-label">SCORE</div>
                 <div class="stat-value" id="score">0</div>
             </div>
             <div class="stat-box">
@@ -35,18 +78,25 @@
         <div class="game-board" id="gameBoard"></div>
 
         <div class="buttons">
-            <button class="btn btn-primary" onclick="startGame()">MULAI BARU</button>
-            <button class="btn btn-secondary" onclick="resetGame()">RESET</button>
-            <button class="btn btn-sound" id="soundToggle" onclick="toggleSound()">🔊 SUARA ON</button>
+            <button class="btn btn-primary" onclick="showLevelSelection()">CHANGE LEVEL</button>
+            <button class="btn btn-secondary" onclick="resetGame()">RESTART</button>
+            <button class="btn btn-sound" id="soundToggle" onclick="toggleSound()">🔊 SOUND ON</button>
         </div>
     </div>
 
+    <!-- Game Over Modal -->
     <div class="modal" id="gameOverModal">
         <div class="modal-content">
-            <h2 id="modalTitle">🎉 SELAMAT!</h2>
-            <p id="modalMessage">Anda menang!</p>
-            <p>Skor Akhir: <span id="finalScore">0</span></p>
-            <button class="btn btn-primary" onclick="closeModal()">MAIN LAGI</button>
+            <h2 id="modalTitle">🎉 VICTORY!</h2>
+            <p id="modalMessage">Congratulations! You reached the target!</p>
+            <div class="modal-stats">
+                <p><strong>Final Score:</strong> <span id="finalScore">0</span></p>
+                <p><strong>Level:</strong> <span id="finalLevel">NORMAL</span></p>
+            </div>
+            <div class="modal-buttons">
+                <button class="btn btn-primary" onclick="closeModal()">PLAY AGAIN</button>
+                <button class="btn btn-secondary" onclick="showLevelSelectionFromModal()">CHANGE LEVEL</button>
+            </div>
         </div>
     </div>
 
