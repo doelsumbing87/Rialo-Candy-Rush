@@ -4,27 +4,56 @@
     box-sizing: border-box;
 }
 
-/* ==== Background Default (Level Selection) ==== */
+/* ==== Background Default ==== */
 body {
     font-family: 'Poppins', sans-serif;
     background-image: url('background.png');
-    background-size: cover;
-    background-position: center;
+    background-size: cover;           /* isi layar penuh */
+    background-position: center;      /* selalu fokus tengah */
     background-repeat: no-repeat;
-    background-attachment: fixed;
+    background-attachment: fixed;     /* efek parallax di desktop */
     min-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
     padding: 20px;
     overflow-x: hidden;
-    transition: background-image 1s ease-in-out; /* efek transisi lembut */
+    transition: background-image 1s ease-in-out;
 }
 
 /* ==== Saat Masuk Game ==== */
 body.in-game {
     background-image: url('background2.png');
 }
+
+/* ==== Responsif untuk layar kecil (HP) ==== */
+@media (max-width: 768px) {
+    body {
+        background-size: contain;    /* biar gambar terlihat utuh */
+        background-position: top;    /* fokus atas */
+        background-attachment: scroll; /* biar ga nge-lag di HP */
+    }
+
+    .level-selection,
+    .game-container {
+        width: 95%;      /* biar muat di layar kecil */
+        padding: 15px;
+        margin: 10px auto;
+    }
+
+    .logo-large {
+        max-width: 80px;
+    }
+
+    h1 {
+        font-size: 1.4rem;
+    }
+
+    h2 {
+        font-size: 1rem;
+    }
+}
+
 
 .game-container {
     background: rgba(255, 255, 255, 0.98);
