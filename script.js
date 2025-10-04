@@ -441,7 +441,7 @@ function startGame() {
     // Start background music
     if (soundEnabled) {
         bgMusic.currentTime = 0;
-        bgMusic.play().catch(e => console.log("BGM play failed:", e));
+        bgMusic.play().catch(e => console.log('BGM play failed:', e));
     }
 }
 
