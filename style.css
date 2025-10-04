@@ -343,10 +343,239 @@ body {
     100% { transform: translateY(-60px); opacity: 0; }
 }
 
+/* ===== LEVEL SELECTION ===== */
+.level-selection {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    z-index: 2000;
+}
+
+.level-container {
+    background: rgba(255, 255, 255, 0.98);
+    border-radius: 30px;
+    padding: 40px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    max-width: 600px;
+    width: 100%;
+    text-align: center;
+}
+
+.level-container h1 {
+    font-size: 2.2em;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+    margin-bottom: 10px;
+    font-weight: 800;
+    letter-spacing: 1px;
+}
+
+.level-container h2 {
+    font-size: 1.3em;
+    color: #764ba2;
+    margin-bottom: 30px;
+    font-weight: 700;
+    letter-spacing: 2px;
+}
+
+.level-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.level-btn {
+    background: white;
+    border: 3px solid transparent;
+    border-radius: 18px;
+    padding: 25px 15px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+.level-btn:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+}
+
+.level-btn.easy {
+    border-color: #4ade80;
+}
+
+.level-btn.easy:hover {
+    background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
+}
+
+.level-btn.normal {
+    border-color: #3b82f6;
+}
+
+.level-btn.normal:hover {
+    background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+}
+
+.level-btn.hard {
+    border-color: #f97316;
+}
+
+.level-btn.hard:hover {
+    background: linear-gradient(135deg, #fff7ed 0%, #ffedd5 100%);
+}
+
+.level-btn.expert {
+    border-color: #ef4444;
+}
+
+.level-btn.expert:hover {
+    background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
+}
+
+.level-btn.nightmare {
+    border-color: #8b5cf6;
+    background: linear-gradient(135deg, #1f1f1f 0%, #3f3f3f 100%);
+}
+
+.level-btn.nightmare:hover {
+    background: linear-gradient(135deg, #2f2f2f 0%, #4f4f4f 100%);
+}
+
+.level-btn.nightmare .level-name,
+.level-btn.nightmare .level-info {
+    color: white;
+}
+
+.level-icon {
+    font-size: 2.5em;
+}
+
+.level-name {
+    font-size: 1.2em;
+    font-weight: 800;
+    color: #333;
+    letter-spacing: 1px;
+}
+
+.level-info {
+    font-size: 0.75em;
+    color: #666;
+    font-weight: 600;
+}
+
+.level-badge {
+    display: inline-block;
+    padding: 8px 20px;
+    border-radius: 20px;
+    font-size: 0.9em;
+    font-weight: 800;
+    letter-spacing: 1px;
+    margin-top: 5px;
+    text-transform: uppercase;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+}
+
+.level-badge.easy {
+    background: linear-gradient(135deg, #4ade80 0%, #22c55e 100%);
+    color: white;
+}
+
+.level-badge.normal {
+    background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+    color: white;
+}
+
+.level-badge.hard {
+    background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
+    color: white;
+}
+
+.level-badge.expert {
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+    color: white;
+}
+
+.level-badge.nightmare {
+    background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+    color: white;
+}
+
+.modal-stats {
+    margin: 20px 0;
+    padding: 15px;
+    background: #f8f9fa;
+    border-radius: 12px;
+}
+
+.modal-stats p {
+    margin: 8px 0;
+    font-size: 1em;
+}
+
+.modal-buttons {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
 /* ===== RESPONSIVE DESIGN ===== */
 
 /* Tablet & Smaller Laptops */
 @media (max-width: 768px) {
+    .level-container {
+        padding: 30px 20px;
+    }
+
+    .level-container h1 {
+        font-size: 1.8em;
+    }
+
+    .level-container h2 {
+        font-size: 1.1em;
+        margin-bottom: 25px;
+    }
+
+    .level-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+    }
+
+    .level-btn {
+        padding: 20px 12px;
+    }
+
+    .level-icon {
+        font-size: 2em;
+    }
+
+    .level-name {
+        font-size: 1em;
+    }
+
+    .level-info {
+        font-size: 0.7em;
+    }
+
+    .level-badge {
+        padding: 6px 16px;
+        font-size: 0.8em;
+    }
+
     body {
         padding: 15px;
     }
@@ -436,6 +665,58 @@ body {
 
 /* Mobile Phones */
 @media (max-width: 480px) {
+    .level-container {
+        padding: 25px 15px;
+        border-radius: 25px;
+    }
+
+    .level-container h1 {
+        font-size: 1.4em;
+        margin-bottom: 8px;
+    }
+
+    .level-container h2 {
+        font-size: 1em;
+        margin-bottom: 20px;
+        letter-spacing: 1px;
+    }
+
+    .level-grid {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+
+    .level-btn {
+        padding: 18px 10px;
+        border-radius: 15px;
+    }
+
+    .level-icon {
+        font-size: 1.8em;
+    }
+
+    .level-name {
+        font-size: 0.95em;
+    }
+
+    .level-info {
+        font-size: 0.65em;
+    }
+
+    .level-badge {
+        padding: 5px 14px;
+        font-size: 0.75em;
+    }
+
+    .modal-buttons {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .modal-buttons .btn {
+        width: 100%;
+    }
+
     body {
         padding: 10px;
     }
