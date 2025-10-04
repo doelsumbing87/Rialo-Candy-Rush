@@ -1,281 +1,582 @@
-/* === GLOBAL STYLES & FONTS === */
-/* Gaya dasar untuk seluruh halaman */
 * {
-    box-sizing: border-box;
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
 }
 
 body {
-    font-family: 'Nunito', sans-serif; /* Font utama untuk teks */
-    background: linear-gradient(135deg, #ffdde1, #ee9ca7); /* Latar belakang gradien yang manis */
-    color: #444;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 100vh;
-    overflow: hidden; /* Mencegah scroll yang tidak perlu */
-}
-
-/* === SCREEN MANAGEMENT === */
-/* Mengatur bagaimana layar (halaman awal/game) ditampilkan */
-.screen {
-    display: none; /* Semua layar disembunyikan secara default */
-    width: 100%;
-    max-width: 600px;
     padding: 20px;
+    overflow-x: hidden;
 }
 
-.screen.active {
-    display: block; /* Layar dengan kelas 'active' akan ditampilkan */
+.game-container {
+    background: rgba(255, 255, 255, 0.98);
+    border-radius: 30px;
+    padding: 25px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    max-width: 600px;
+    width: 100%;
+    backdrop-filter: blur(10px);
 }
 
-/* === START SCREEN STYLING === */
-/* Gaya untuk halaman pembuka */
-#start-screen {
+/* ===== HEADER & LOGO ===== */
+.header {
     text-align: center;
-}
-
-.start-container {
-    background-color: rgba(255, 255, 255, 0.9);
-    padding: 40px;
-    border-radius: 20px;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
 }
 
 .logo-large {
-    width: 120px;
-    margin-bottom: 20px;
+    max-width: 100px;
+    height: auto;
+    display: block;
+    margin: 0 auto 15px;
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
+    transition: transform 0.3s ease;
 }
 
-.game-title {
-    font-family: 'Lilita One', cursive; /* Font khusus untuk judul */
-    font-size: 3.5rem;
-    color: #e91e63; /* Warna pink cerah */
-    text-shadow: 2px 2px 0 #fff, 4px 4px 0 rgba(0,0,0,0.1);
+.logo-large:hover {
+    transform: scale(1.05);
 }
 
-.tagline {
-    font-size: 1.2rem;
-    margin: 10px 0 30px;
-    color: #555;
+.header h1 {
+    font-size: 2em;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+    margin-bottom: 10px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    animation: titleFloat 3s ease-in-out infinite;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-/* === MAIN GAME AREA STYLING === */
-/* Gaya untuk area permainan utama */
-.game-header {
+@keyframes titleFloat {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
+}
+
+/* ===== STATS SECTION ===== */
+.stats {
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    background: #fff;
-    padding: 10px 20px;
-    border-radius: 15px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.08);
-    margin-bottom: 20px;
+    margin-bottom: 18px;
+    gap: 10px;
 }
 
-.logo-area {
-    display: flex;
-    align-items: center;
-}
-
-.logo-area h2 {
-    font-family: 'Lilita One', cursive;
-    font-size: 1.5rem;
-    color: #e91e63;
-}
-
-.logo-small {
-    width: 40px;
-    margin-right: 10px;
-}
-
-.info-panel {
-    display: flex;
-    gap: 20px;
-}
-
-.info-box {
-    background-color: #fce4ec; /* Pink sangat muda */
-    padding: 5px 15px;
-    border-radius: 10px;
+.stat-box {
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    padding: 12px 18px;
+    border-radius: 12px;
+    color: white;
+    flex: 1;
     text-align: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    transition: transform 0.2s ease;
+    min-width: 0;
 }
 
-.info-box h3 {
-    font-size: 0.8rem;
-    color: #e91e63;
+.stat-box:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
 }
 
-.info-box span {
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: #ad1457;
-}
-
-/* === GAME BOARD STYLING (THE FIX IS HERE) === */
-#board-container {
-    display: flex;
-    justify-content: center;
-}
-
-#board {
-    width: 450px;
-    height: 450px;
-    background-color: rgba(255, 255, 255, 0.7);
-    border: 5px solid #fff;
-    border-radius: 10px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-
-    /* --- PERUBAHAN UTAMA DI SINI --- */
-    /* Mengganti Flexbox dengan CSS Grid untuk presisi */
-    display: grid;
-    grid-template-rows: repeat(9, 1fr);
-    grid-template-columns: repeat(9, 1fr);
-}
-
-#board img {
-    /* Membuat gambar mengisi sel gridnya dengan sempurna */
-    width: 100%;
-    height: 100%;
-    cursor: grab;
-}
-
-/* === CONTROL BUTTONS STYLING === */
-.game-controls {
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-    margin-top: 20px;
-}
-
-/* === GENERAL BUTTON STYLING === */
-.btn {
-    font-family: 'Nunito', sans-serif;
+.stat-label {
+    font-size: 0.75em;
+    opacity: 0.95;
+    margin-bottom: 4px;
     font-weight: 700;
-    font-size: 1rem;
-    padding: 12px 25px;
-    border-radius: 50px; /* Membuat tombol berbentuk kapsul */
-    border: none;
-    cursor: pointer;
-    transition: all 0.3s ease;
     text-transform: uppercase;
-    letter-spacing: 1px;
+    letter-spacing: 0.5px;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.stat-value {
+    font-size: 1.6em;
+    font-weight: 900;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* ===== PROGRESS BAR ===== */
+.progress-bar {
+    background: #e0e0e0;
+    height: 22px;
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 18px;
+    box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.15);
+}
+
+.progress-fill {
+    background: linear-gradient(90deg, #4facfe 0%, #00f2fe 100%);
+    height: 100%;
+    width: 0%;
+    transition: width 0.4s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: 700;
+    font-size: 0.85em;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+/* ===== GAME BOARD ===== */
+.game-board {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    gap: 6px;
+    background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+    padding: 12px;
+    border-radius: 18px;
+    margin-bottom: 18px;
+    box-shadow: inset 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.candy {
+    aspect-ratio: 1;
+    border-radius: 10px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8em;
+    transition: all 0.2s ease;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+    background: white;
+    user-select: none;
+}
+
+.candy:hover {
+    transform: scale(1.08);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+}
+
+.candy.selected {
+    transform: scale(1.12);
+    box-shadow: 0 0 18px rgba(255, 215, 0, 0.9);
+    border: 2px solid #ffd700;
+    animation: selectedPulse 0.5s ease infinite;
+}
+
+@keyframes selectedPulse {
+    0%, 100% { box-shadow: 0 0 18px rgba(255, 215, 0, 0.8); }
+    50% { box-shadow: 0 0 28px rgba(255, 215, 0, 1); }
+}
+
+.candy.matching {
+    animation: pulse 0.3s ease;
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+}
+
+.candy.falling {
+    animation: fall 0.5s ease;
+}
+
+@keyframes fall {
+    from { transform: translateY(-100px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+/* ===== BUTTONS ===== */
+.buttons {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.btn {
+    padding: 12px 28px;
+    font-size: 1em;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    font-weight: 700;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
 .btn-primary {
-    background-color: #ff4081;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     color: white;
-    box-shadow: 0 4px 0 #c2185b;
 }
 
 .btn-primary:hover {
-    background-color: #f50057;
     transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
 }
 
 .btn-primary:active {
-    transform: translateY(2px);
-    box-shadow: 0 2px 0 #c2185b;
+    transform: translateY(0);
 }
 
 .btn-secondary {
-    background-color: #f1f1f1;
-    color: #555;
-    box-shadow: 0 4px 0 #ccc;
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    color: white;
 }
 
 .btn-secondary:hover {
-    background-color: #e0e0e0;
     transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
 }
 
 .btn-secondary:active {
-    transform: translateY(2px);
-    box-shadow: 0 2px 0 #ccc;
+    transform: translateY(0);
 }
 
+.btn-sound {
+    background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+    color: white;
+    font-size: 0.95em;
+    padding: 12px 22px;
+}
 
-/* === MODAL (POP-UP) STYLING === */
+.btn-sound:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
+}
+
+.btn-sound:active {
+    transform: translateY(0);
+}
+
+/* ===== MODAL ===== */
 .modal {
-    display: none; /* Disembunyikan secara default */
+    display: none;
     position: fixed;
-    z-index: 1000;
-    left: 0;
     top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5); /* Latar belakang semi-transparan */
+    background: rgba(0, 0, 0, 0.75);
     justify-content: center;
     align-items: center;
-}
-
-.modal.active {
-    display: flex; /* Ditampilkan saat memiliki kelas 'active' */
+    z-index: 1000;
+    backdrop-filter: blur(8px);
+    padding: 20px;
 }
 
 .modal-content {
-    background-color: #fff;
-    padding: 30px;
-    border-radius: 20px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-    width: 90%;
-    max-width: 500px;
+    background: white;
+    padding: 35px;
+    border-radius: 22px;
     text-align: center;
-    position: relative;
-    animation: zoomIn 0.3s ease-out;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+    max-width: 380px;
+    width: 100%;
+    animation: modalSlideIn 0.3s ease;
 }
 
-@keyframes zoomIn {
-    from { transform: scale(0.5); opacity: 0; }
+@keyframes modalSlideIn {
+    from { transform: scale(0.8); opacity: 0; }
     to { transform: scale(1); opacity: 1; }
 }
 
-.close-button {
+.modal h2 {
+    font-size: 2.2em;
+    margin-bottom: 18px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+    font-weight: 800;
+}
+
+.modal p {
+    font-size: 1.1em;
+    margin-bottom: 20px;
+    color: #444;
+    font-weight: 500;
+}
+
+/* ===== POPUPS ===== */
+.combo-popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 2.5em;
+    font-weight: 900;
+    color: #ffd700;
+    text-shadow: 0 0 20px rgba(0, 0, 0, 0.6),
+                 0 2px 4px rgba(0, 0, 0, 0.4);
+    animation: comboAnim 1s ease;
+    pointer-events: none;
+    z-index: 999;
+}
+
+@keyframes comboAnim {
+    0% { transform: translate(-50%, -50%) scale(0); opacity: 0; }
+    50% { transform: translate(-50%, -50%) scale(1.2); opacity: 1; }
+    100% { transform: translate(-50%, -50%) scale(1); opacity: 0; }
+}
+
+.score-popup {
     position: absolute;
-    top: 15px;
-    right: 20px;
-    color: #aaa;
-    font-size: 28px;
-    font-weight: bold;
-    cursor: pointer;
+    font-size: 1.4em;
+    font-weight: 900;
+    color: #4facfe;
+    text-shadow: 0 0 10px rgba(0, 0, 0, 0.4),
+                 0 2px 4px rgba(0, 0, 0, 0.3);
+    animation: scoreFloat 1s ease;
+    pointer-events: none;
+    z-index: 998;
 }
 
-.close-button:hover {
-    color: #333;
+@keyframes scoreFloat {
+    0% { transform: translateY(0); opacity: 1; }
+    100% { transform: translateY(-60px); opacity: 0; }
 }
 
-.modal-content h2 {
-    font-family: 'Lilita One', cursive;
-    color: #e91e63;
-    font-size: 2.5rem;
-    margin-bottom: 15px;
+/* ===== RESPONSIVE DESIGN ===== */
+
+/* Tablet & Smaller Laptops */
+@media (max-width: 768px) {
+    body {
+        padding: 15px;
+    }
+
+    .game-container {
+        padding: 20px;
+        border-radius: 25px;
+    }
+
+    .logo-large {
+        max-width: 80px;
+        margin-bottom: 12px;
+    }
+
+    .header h1 {
+        font-size: 1.6em;
+        letter-spacing: 0.5px;
+    }
+    
+    .stats {
+        gap: 8px;
+        margin-bottom: 15px;
+    }
+
+    .stat-box {
+        padding: 10px 12px;
+    }
+
+    .stat-label {
+        font-size: 0.7em;
+    }
+    
+    .stat-value {
+        font-size: 1.4em;
+    }
+
+    .progress-bar {
+        height: 20px;
+        margin-bottom: 15px;
+    }
+
+    .progress-fill {
+        font-size: 0.75em;
+    }
+
+    .game-board {
+        gap: 5px;
+        padding: 10px;
+    }
+    
+    .candy {
+        font-size: 1.4em;
+        border-radius: 8px;
+    }
+    
+    .btn {
+        padding: 10px 20px;
+        font-size: 0.9em;
+    }
+
+    .btn-sound {
+        padding: 10px 18px;
+        font-size: 0.85em;
+    }
+
+    .modal-content {
+        padding: 28px;
+        max-width: 320px;
+    }
+
+    .modal h2 {
+        font-size: 1.8em;
+    }
+
+    .modal p {
+        font-size: 1em;
+    }
+
+    .combo-popup {
+        font-size: 2em;
+    }
+
+    .score-popup {
+        font-size: 1.2em;
+    }
 }
 
-.modal-content ul {
-    list-style: none;
-    padding: 0;
-    text-align: left;
-    margin: 20px 0;
+/* Mobile Phones */
+@media (max-width: 480px) {
+    body {
+        padding: 10px;
+    }
+
+    .game-container {
+        padding: 15px;
+        border-radius: 20px;
+    }
+
+    .logo-large {
+        max-width: 65px;
+        margin-bottom: 10px;
+    }
+
+    .header {
+        margin-bottom: 15px;
+    }
+
+    .header h1 {
+        font-size: 1.3em;
+        margin-bottom: 8px;
+    }
+    
+    .stats {
+        gap: 6px;
+        margin-bottom: 12px;
+    }
+
+    .stat-box {
+        padding: 8px 10px;
+        border-radius: 10px;
+    }
+
+    .stat-label {
+        font-size: 0.65em;
+        margin-bottom: 3px;
+    }
+    
+    .stat-value {
+        font-size: 1.2em;
+    }
+
+    .progress-bar {
+        height: 18px;
+        margin-bottom: 12px;
+        border-radius: 10px;
+    }
+
+    .progress-fill {
+        font-size: 0.7em;
+    }
+
+    .game-board {
+        gap: 4px;
+        padding: 8px;
+        border-radius: 15px;
+        margin-bottom: 15px;
+    }
+    
+    .candy {
+        font-size: 1.2em;
+        border-radius: 6px;
+    }
+
+    .buttons {
+        gap: 8px;
+    }
+    
+    .btn {
+        padding: 10px 18px;
+        font-size: 0.85em;
+        border-radius: 10px;
+    }
+
+    .btn-sound {
+        padding: 10px 15px;
+        font-size: 0.8em;
+    }
+
+    .modal-content {
+        padding: 25px;
+        border-radius: 18px;
+        max-width: 280px;
+    }
+
+    .modal h2 {
+        font-size: 1.5em;
+        margin-bottom: 15px;
+    }
+
+    .modal p {
+        font-size: 0.95em;
+        margin-bottom: 18px;
+    }
+
+    .combo-popup {
+        font-size: 1.8em;
+    }
+
+    .score-popup {
+        font-size: 1em;
+    }
 }
 
-.modal-content ul li {
-    margin-bottom: 10px;
-    padding-left: 25px;
-    position: relative;
-}
+/* Very Small Devices */
+@media (max-width: 360px) {
+    .game-container {
+        padding: 12px;
+    }
 
-.modal-content ul li::before {
-    content: '🍬'; /* Emoji permen sebagai bullet point */
-    position: absolute;
-    left: 0;
-}
+    .logo-large {
+        max-width: 55px;
+    }
 
-.final-score-display {
-    display: block;
-    font-family: 'Lilita One', cursive;
-    font-size: 4rem;
-    color: #ff4081;
-    margin: 10px 0 25px;
-}
+    .header h1 {
+        font-size: 1.1em;
+    }
 
+    .stat-box {
+        padding: 6px 8px;
+    }
+
+    .stat-label {
+        font-size: 0.6em;
+    }
+
+    .stat-value {
+        font-size: 1em;
+    }
+
+    .candy {
+        font-size: 1em;
+    }
+
+    .btn {
+        padding: 8px 15px;
+        font-size: 0.8em;
+    }
+
+    .btn-sound {
+        padding: 8px 12px;
+        font-size: 0.75em;
+    }
+}
